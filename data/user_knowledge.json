@@ -1,0 +1,40 @@
+{
+  "profile": "alice_carter_demo",
+  "description": "A narrowly scoped privacy profile for an AI assistant.",
+  "rules": [
+    {
+      "effect": "ALLOW",
+      "context": "healthcare",
+      "recipient": "clinic_scheduler",
+      "attribute": "appointment_request",
+      "purpose": "reschedule_appointment",
+      "reason": "The user asked the agent to contact the clinic to reschedule."
+    },
+    {
+      "effect": "REDACT",
+      "context": "healthcare",
+      "recipient": "clinic_scheduler",
+      "attribute": "insurance_id",
+      "purpose": "reschedule_appointment",
+      "reason": "Insurance information is not needed to request another appointment time."
+    },
+    {
+      "effect": "DENY",
+      "context": "healthcare",
+      "recipient": "clinic_scheduler",
+      "attribute": "diagnosis",
+      "purpose": "reschedule_appointment",
+      "reason": "Explicit veto: do not disclose diagnosis when scheduling appointments."
+    }
+  ],
+  "precedents": [
+    {
+      "effect": "ALLOW",
+      "context": "healthcare",
+      "recipient": "clinic_scheduler",
+      "attribute": "appointment_request",
+      "purpose": "reschedule_appointment",
+      "reason": "Past approval: scheduling-only messages may go to the verified clinic scheduler."
+    }
+  ]
+}
